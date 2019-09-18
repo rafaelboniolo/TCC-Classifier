@@ -1,7 +1,7 @@
 from enum import Enum
-from Classifier.src.ConfigDataset import ConfigDataset
+# from ConfigDataset import ConfigDataset
 
 class Mode(Enum):
-    TRAIN = ConfigDataset().getTrainPath()
-    TEST = ConfigDataset().getTestPath()
-    VAL = ConfigDataset().getValPath()
+    TRAIN = "C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset"
+    TEST = "C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\test"
+    VAL = ""

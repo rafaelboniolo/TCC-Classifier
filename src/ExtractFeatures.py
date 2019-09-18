@@ -2,10 +2,8 @@ import cv2
 import os
 import numpy as np 
 
-class ExtractFearutes(object):
-    def __init__(self):
-        super().__init__(self)
-        
+class ExtractFeatures:
+    
     def byOrb(path, vector_size = 32):
         
         x_val = []
@@ -14,6 +12,7 @@ class ExtractFearutes(object):
         orb = cv2.ORB_create()
 
         # faz a listagem das imagens
+        print(path)
         f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('.png'))])
         
         i = 0
@@ -50,7 +49,7 @@ class ExtractFearutes(object):
                     x_val.append(dsc)
                     
                     # get class
-                    y_val.append((f[:1]))
+                    y_val.append(int(f[:1]))
                 i = i + 1
                 print(str(i));
 

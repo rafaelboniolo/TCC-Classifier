@@ -1,13 +1,11 @@
 class ConfigDataset:
-    def __init__(self):
-        super().__init__(self)
 
-    def getTrainPath():
-        return 'C:\\Users\\rafae\\Desktop\\TCC\\WebScrapping\\src\\dataset'
+    def getTrainPath(self):
+        return 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
     
-    def getTestPath():
-        return 'C:\\Users\\rafae\\Desktop\\TCC\\WebScrapping\\src\\car'
+    def getTestPath(self):
+        return 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\test'
     
-    def getValPath():
+    def getValPath(self):
         return 'C:\\Users\\rafae\\Desktop\\TCC\\WebScrapping\\src\\dataset'
     

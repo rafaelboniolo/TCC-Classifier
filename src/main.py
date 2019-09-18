@@ -9,20 +9,12 @@ import matplotlib.pyplot as plt
 import sys
 sys.path
 
-# from keras.applications.resnet50 import ResNet50
-from classifier.src import Mode 
-# from ExtractFeatures import ExtractFearutes
+from ExtractFeatures import ExtractFeatures
+from Mode import Mode
 
+X_train, y_train = ExtractFeatures.byOrb(Mode.TRAIN.value);
+X_test,  y_test  = ExtractFeatures.byOrb(Mode.TRAIN.value);
 
-# X_train, y_train = extract_features_resnet(train_path)
-# X_test, y_test = extract_features_resnet(test_path)
-
-X_train, y_train = ExtractFearutes.byOrb(Mode.TRAIN);
-X_test,  y_test  = ExtractFearutes.byOrb(Mode.TEST);
-
-
-
-# X_val, y_val = extract_features(val_path)
 
 
 ## classification
@@ -65,10 +57,10 @@ print(oc_svm_preds)
 ## http://rasbt.github.io/mlxtend/user_guide/evaluate/confusion_matrix/
 ###############################################
 
-# from mlxtend.evaluate import confusion_matrix
-# from mlxtend.plotting import plot_confusion_matrix
+from mlxtend.evaluate import confusion_matrix
+from mlxtend.plotting import plot_confusion_matrix
 
-# cm = confusion_matrix(y_target=y_test, y_predicted=oc_svm_preds, binary=True)
-# fig, ax = plot_confusion_matrix(conf_mat=cm)
+cm = confusion_matrix(y_target=y_test, y_predicted=oc_svm_preds, binary=True)
+fig, ax = plot_confusion_matrix(conf_mat=cm)
 
-# plt.savefig("oc_svm_confusion_matrix.png")
+plt.savefig("oc_svm_confusion_matrix.png")
