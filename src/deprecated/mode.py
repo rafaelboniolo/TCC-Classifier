@@ -1,5 +1,5 @@
 from enum import Enum
-from Classifier.src.ConfigDataset import ConfigDataset
+from configdataset import ConfigDataset
 
 class Mode(Enum):
     TRAIN = ConfigDataset().getTrainPath()

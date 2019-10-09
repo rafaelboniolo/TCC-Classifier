@@ -2,11 +2,7 @@ import cv2
 import os
 import numpy as np 
 
-class ExtractFearutes(object):
-    def __init__(self):
-        super().__init__(self)
-        
-    def byOrb(path, vector_size = 32):
+def extract(path, vector_size = 32):
         
         x_val = []
         y_val = []
