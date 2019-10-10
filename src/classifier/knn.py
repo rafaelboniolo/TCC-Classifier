@@ -21,9 +21,7 @@ def classify(type):
         X_train, y_train = orb.extract(path);
         X_test,  y_test  = orb.extract(path);
     else:
-        X_train, y_train = hog.extract(0.7, path, '.png');
-        X_test,  y_test  = hog.extract(0.7, path, '.png');    
-    
+        X_train, y_train, X_test, y_test = hog.extract(0.7, path, '.png');    
 
     pca = PCA(n_components=2, whiten=True)
     pca = pca.fit(X_train)
