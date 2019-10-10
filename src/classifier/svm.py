@@ -14,6 +14,8 @@ from sklearn.ensemble import IsolationForest
 from sklearn import svm
 from extractor import hog
 from extractor import orb
+from extractor import sift
+from extractor import surf
 
 def classify(type):
     path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
@@ -21,9 +23,18 @@ def classify(type):
     if type == "orb":
         X_train, y_train = orb.extract(path);
         X_test,  y_test  = orb.extract(path);
-    else:
+    
+    elif type == "hog":
         X_train, y_train, X_test, y_test = hog.extract(0.7, path, '.png');
-        
+    
+    elif type == "sift":
+        X_train, y_train = sift.extract(path);
+        X_test,  y_test  = sift.extract(path);
+    
+    elif type == "surf":
+        X_train, y_train = surf.extract(path);
+    
+
     pca = PCA(n_components=2, whiten=True)
     pca = pca.fit(X_train)
 

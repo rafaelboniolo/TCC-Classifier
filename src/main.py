@@ -5,7 +5,7 @@ from classifier import svm
 extractor = sys.argv[1]
 algoritm = sys.argv[2]
 
-if  not (extractor  ==  "orb" or extractor == 'hog'):
+if  not (extractor  ==  "orb" or extractor == 'hog' or extractor == 'sift' or extractor == 'surf'):
     print("invalid extractor argument!")
     exit()
 
@@ -16,6 +16,7 @@ if algoritm == 'knn':
 elif algoritm == 'svm':
     print('svm', extractor)
     svm.classify(extractor)
+    
 else:
     print("invalid classifier argument!")
     exit()
