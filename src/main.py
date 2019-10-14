@@ -1,21 +1,29 @@
 import sys
 from classifier import knn
 from classifier import svm
+import argparse
 
-extractor = sys.argv[1]
-algoritm = sys.argv[2]
+ap = argparse.ArgumentParser()
+ap.add_argument("-a", "--algoritm", required=True, help="Entre com o algoritmo de classificação")
+ap.add_argument("-d", "--descriptor", required=True, help="Entre com o descritor")
 
-if  not (extractor  ==  "orb" or extractor == 'hog' or extractor == 'sift' or extractor == 'surf'):
+args = vars(ap.parse_args())
+
+
+descriptor = args["descriptor"]
+algoritm  =  args["algoritm"]
+
+if  not (descriptor  ==  "orb" or descriptor == 'hog' or descriptor == 'sift' or descriptor == 'surf'):
     print("invalid extractor argument!")
     exit()
 
 if algoritm == 'knn':
-    print('knn', extractor)
-    knn.classify(extractor)
+    print('knn', descriptor)
+    knn.classify(descriptor)
 
 elif algoritm == 'svm':
-    print('svm', extractor)
-    svm.classify(extractor)
+    print('svm', descriptor)
+    svm.classify(descriptor)
     
 else:
     print("invalid classifier argument!")

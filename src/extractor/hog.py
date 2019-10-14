@@ -3,6 +3,8 @@ import os
 import numpy as np 
 from sklearn.utils import shuffle
 from skimage.feature import hog
+import sys
+sys.path
 
 def extract(train_rate, path, posfix):
 

@@ -11,7 +11,7 @@ def extract(path, vector_size = 32):
         surf = cv2.xfeatures2d.SURF_create()
 
         print(path)
-        f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('.png'))])
+        f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('10.png'))])
         
         i = 0
         for f in f_imgs:

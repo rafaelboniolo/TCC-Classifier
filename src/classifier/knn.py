@@ -20,14 +20,13 @@ def classify(type):
     path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
     
     if type == "orb":
-        X_train, y_train = orb.extract(path);
-        X_test,  y_test  = orb.extract(path);
-    
+        X_train, y_train, X_test, y_test = orb.extract(path);
+       
     elif type == "hog":
         X_train, y_train, X_test, y_test = hog.extract(0.7, path, '.png');    
     
     elif type == "sift":
-        X_train, y_train = sift.extract(path);
+        X_train, y_train, X_test, y_test = sift.extract(path);
     
     elif type == "surf":
         X_train, y_train, X_test, y_test = surf.extract(path);
@@ -42,7 +41,7 @@ def classify(type):
     # X_train = pca.transform(X_train)
     # X_test = pca.transform(X_test)
 
-    classifier = KNeighborsClassifier(n_neighbors=7)
+    classifier = KNeighborsClassifier(n_neighbors=33, weights="uniform", metric="manhattan")
 
     classifier.fit(X_train, y_train)
     y_predicted = classifier.predict(X_test)
@@ -75,4 +74,4 @@ def classify(type):
 
     c_report = classification_report(y_test, y_predicted, output_dict=True)
     df_report = pd.DataFrame(c_report)
-    df_report.to_csv('report.csv', index= True)
+    df_report.to_csv('.\\output\\report.csv', index= True)
