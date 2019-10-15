@@ -2,6 +2,7 @@ import cv2
 import os
 import numpy as np 
 from sklearn.utils import shuffle
+from tqdm import tqdm
 
 
 def extract(path, vector_size = 32):
@@ -9,13 +10,13 @@ def extract(path, vector_size = 32):
         x_val = []
         y_val = []
 
-        sift = cv2.xfeatures2d.SIFT_create(10)
+        sift = cv2.xfeatures2d.SIFT_create(11)
 
         print(path)
         f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('.png'))])
         
         i = 0
-        for f in f_imgs:
+        for f in tqdm(f_imgs):
         
             try:
                 # Carrega a imagem pra memória
@@ -41,7 +42,6 @@ def extract(path, vector_size = 32):
                     # get class
                     y_val.append(int(f[:1]))
                 i = i + 1
-                print(str(i));
 
             except cv2.error as e:
                 print('Error: ', e)

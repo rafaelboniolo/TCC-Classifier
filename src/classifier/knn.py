@@ -41,7 +41,7 @@ def classify(type):
     # X_train = pca.transform(X_train)
     # X_test = pca.transform(X_test)
 
-    classifier = KNeighborsClassifier(n_neighbors=3, weights="uniform", metric="manhattan")
+    classifier = KNeighborsClassifier(n_neighbors=11, weights="distance", metric="manhattan")
 
     classifier.fit(X_train, y_train)
     y_predicted = classifier.predict(X_test)
