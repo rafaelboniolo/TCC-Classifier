@@ -9,10 +9,10 @@ def extract(path, vector_size = 32):
         x_val = []
         y_val = []
 
-        sift = cv2.xfeatures2d.SIFT_create()
+        sift = cv2.xfeatures2d.SIFT_create(10)
 
         print(path)
-        f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('10.png'))])
+        f_imgs = np.array([f for f in os.listdir(path) if(f.endswith('.png'))])
         
         i = 0
         for f in f_imgs:
@@ -26,14 +26,14 @@ def extract(path, vector_size = 32):
                 if dsc is not None:
 
                     # # Flatten all of them in one big vector - our feature vector
-                    # dsc = dsc.flatten()
+                    dsc = dsc.flatten()
                     # # Making descriptor of same size
                     # # Descriptor vector size is 64
-                    # needed_size = (vector_size * 64)
-                    # if dsc.size < needed_size:
+                    needed_size = (vector_size * 64)
+                    if dsc.size < needed_size:
                     #     # if we have less the 32 descriptors then just adding zeros at the
                     #     # end of our feature vector
-                    #     dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
+                        dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
 
                     # # print(dsc.size)
                     x_val.append(dsc)
@@ -47,6 +47,9 @@ def extract(path, vector_size = 32):
                 print('Error: ', e)
                     
         X, Y = np.array(x_val) , np.array(y_val)
+
+        # for i in X:
+        #     print(i.size)
 
         # split between training and testing data
         index_train = np.random.choice(X.shape[0], int(X.shape[0] * 0.7), replace=False)
