@@ -3,48 +3,57 @@ from sklearn.neighbors import KNeighborsClassifier
 import os
 import sys
 sys.path
+from extractor import orb
 from extractor import sift
-from sklearn.svm import SVC
+from extractor import hog
+from sklearn.svm import OneClassSVM
+from sklearn.decomposition import PCA
+import numpy as np 
 
 
 path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
-X_train, y_train, X_test, y_test = sift.extract(path);
+X_train, y_train = orb.extract(path, np.array([f for f in os.listdir(path) if(f.endswith('.png'))]));
 
 
-grid_params = {
-    'n_neighbors': [11, 5, 7, 3, 19],
-    'weights': ['uniform', 'distance'],
-    'metric': ['euclidean', 'manhattan'] 
-}
+# grid_params = {
+#     'n_neighbors': [11, 5, 7, 3, 19, 13, 15],
+#     'weights': ['uniform', 'distance'],
+#     'metric': ['euclidean', 'manhattan'] 
+# }
 
-gs = GridSearchCV(
-    KNeighborsClassifier(),
-    grid_params,
-    verbose=1,
-    cv=3,
-    n_jobs=-1
-)
+# gs = GridSearchCV(
+#     KNeighborsClassifier(),
+#     grid_params,
+#     verbose=1,
+#     cv=3,
+#     n_jobs=-1
+# )
 
-# tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
-#                      'C': [1, 10, 100, 1000]},
-#                     {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
+# pca = PCA(n_components=2, whiten=True)
+# pca = pca.fit(X_train)
 
-# scores=['recall', 'precision']
+# print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+# X_train = pca.transform(X_train)
 
-# for score in scores:
-#     gs = GridSearchCV(SVC(), tuned_parameters, cv=5,
-#                     scoring='%s_macro' % score, n_jobs=-1)
+tuned_parameters = {'gamma' : [0.0001, 0.001, 0.01, 0.1],
+        'nu' : [0.1, 0.3, 0.5, 0.7, 0.9]}
 
-#     gs_results = gs.fit(X_train, y_train)
+scores=['precision']
 
-#     print(gs_results.best_score_)
-#     print(gs_results.best_estimator_)
-#     print(gs_results.best_params_)
+for score in scores:
+    gs = GridSearchCV(OneClassSVM(), tuned_parameters, cv=5,
+                    scoring='%s_macro' % score, n_jobs=-1)
 
-gs = GridSearchCV(KNeighborsClassifier(), grid_params, verbose=1, cv=3, n_jobs=-1)
+    gs_results = gs.fit(X_train, y_train)
 
-gs_results = gs.fit(X_train, y_train)
+    print(gs_results.best_score_)
+    print(gs_results.best_estimator_)
+    print(gs_results.best_params_)
 
-print(gs_results.best_score_)
-print(gs_results.best_estimator_)
-print(gs_results.best_params_)
+# gs = GridSearchCV(KNeighborsClassifier(), grid_params, verbose=1, cv=3, n_jobs=-1)
+
+# gs_results = gs.fit(X_train, y_train)
+
+# print(gs_results.best_score_)
+# print(gs_results.best_estimator_)
+# print(gs_results.best_params_)

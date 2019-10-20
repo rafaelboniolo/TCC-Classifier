@@ -13,7 +13,7 @@ args = vars(ap.parse_args())
 descriptor = args["descriptor"]
 algoritm  =  args["algoritm"]
 
-if  not (descriptor  ==  "orb" or descriptor == 'hog' or descriptor == 'sift' or descriptor == 'surf'):
+if  not (descriptor  ==  "orb" or descriptor == 'hog' or descriptor == 'sift' or descriptor == 'surf' or descriptor == 'combined'):
     print("invalid extractor argument!")
     exit()
 
