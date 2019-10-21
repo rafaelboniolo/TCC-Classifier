@@ -12,7 +12,7 @@ import numpy as np
 
 
 path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
-X_train, y_train = orb.extract(path, np.array([f for f in os.listdir(path) if(f.endswith('.png'))]));
+X_train, y_train = sift.extract(path, np.array([f for f in os.listdir(path) if(f.endswith('.png'))]));
 
 
 # grid_params = {
@@ -29,11 +29,11 @@ X_train, y_train = orb.extract(path, np.array([f for f in os.listdir(path) if(f.
 #     n_jobs=-1
 # )
 
-# pca = PCA(n_components=2, whiten=True)
-# pca = pca.fit(X_train)
+pca = PCA(n_components=3, whiten=True)
+pca = pca.fit(X_train)
 
-# print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
-# X_train = pca.transform(X_train)
+print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+X_train = pca.transform(X_train)
 
 tuned_parameters = {'gamma' : [0.0001, 0.001, 0.01, 0.1],
         'nu' : [0.1, 0.3, 0.5, 0.7, 0.9]}
