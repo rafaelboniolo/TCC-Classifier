@@ -1,17 +1,23 @@
 import cv2
 import os
 import numpy as np 
-from sklearn.utils import shuffle
 from tqdm import tqdm
 
 
-def extract(path, data):
+def extract(path, data, train=True):
 
-        vector_size = 32
+        vector_size = 17256
         x_val = []
         y_val = []
 
-        surf = cv2.xfeatures2d.SURF_create(5)
+        if train:
+            print("SURF descripting train")
+        else:
+            print("SURF descripting test")
+
+
+        surf = cv2.xfeatures2d.SURF_create()
+        surf.setExtended(True)
         
         for f in tqdm(data):        
             try:
@@ -20,19 +26,15 @@ def extract(path, data):
 
                 kps, dsc = surf.detectAndCompute(img, None)
 
+                
+
                 if dsc is not None:
+                    dsc = dsc.flatten()
+                    needed_size = (vector_size * 64)
 
-                    # Flatten all of them in one big vector - our feature vector
-                    # dsc = dsc.flatten()
-                    # # Making descriptor of same size
-                    # # Descriptor vector size is 64
-                    # needed_size = (vector_size * 64)
-                    # if dsc.size < needed_size:
-                    #     # if we have less the 32 descriptors then just adding zeros at the
-                    #     # end of our feature vector
-                    #     dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
-
-                    # print(dsc.size)
+                    if dsc.size < needed_size:
+                        dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
+                    
                     x_val.append(dsc)
                     
                     # get class
@@ -41,6 +43,9 @@ def extract(path, data):
 
             except cv2.error as e:
                 print('Error: ', e)
-
+                
+        
+        print(len(x_val[0]))
+        
                     
-        return x_val, y_val
+        return np.array(x_val), np.array(y_val)
