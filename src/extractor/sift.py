@@ -5,15 +5,18 @@ from sklearn.utils import shuffle
 from tqdm import tqdm
 
 
-def extract(path, data):
+def extract(path, data, train=True):
         vector_size = 32
         x_val = []
         y_val = []
 
         sift = cv2.xfeatures2d.SIFT_create(11)
 
+        if train:
+            print("SIFT descripting train")
+        else:
+            print("SIFT descripting test")
         
-        print("Descripting")
         for f in tqdm(data):
         
             try:
@@ -44,6 +47,7 @@ def extract(path, data):
                         y_val.append(-1)
                         
             except cv2.error as e:
+                print(f)
                 print('Error: ', e)
                     
         return x_val, y_val

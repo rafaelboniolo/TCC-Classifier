@@ -9,14 +9,18 @@ from tqdm import tqdm
 from tools import cross_validation
 
 
-def extract(path, data):
+def extract(path, data, train=True):
 
     x_val = []
     y_val = []
 
-    print("Descripting")
+    if train:
+        print("HOG descripting train")
+    else:
+        print("HOG descripting test")
        
     for f in tqdm(data):
+        
         try:
             img = cv2.imread(os.path.join(path, f), cv2.COLOR_RGB2GRAY)
             img = cv2.resize(img, (256, 256))
@@ -36,7 +40,8 @@ def extract(path, data):
                     y_val.append(-1)
         
         except cv2.error as e:
+            print(f)
             print('Error: ', e)
                 
     
-    return x_val, y_val
+    return np.array(x_val), np.array(y_val)

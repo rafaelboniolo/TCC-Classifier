@@ -13,7 +13,7 @@ def split(folds = 2):
     f_imgs = np.array([f for f in os.listdir(path) if(f.endswith(".png"))])
     imgs = []
 
-    print("Splitting...")
+    print("Splitting dataset " + str(folds) + " folds...")
 
     for f in tqdm(f_imgs):
         try:

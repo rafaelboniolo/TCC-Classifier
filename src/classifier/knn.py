@@ -21,10 +21,10 @@ path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
 def split_sets(conj_train, conj_test, descriptor):
 
     for i in range(0, len(conj_test)):
-        print("\n\n\n\n************************************")
-        print("EXECUÇÃO "+ str(i+1) + " de ", end='')
-        print(len(conj_test))
-        print("************************************")
+        print("\n\n\n\n*********************")
+        print("** EXECUÇÃO "+ str(i+1) + " de ", end='')
+        print(len(conj_test), end=" **\n")
+        print("*********************")
         
         if descriptor == 'hog':
             X_train, y_train = hog.extract(path, conj_train[i]);    
@@ -43,19 +43,22 @@ def split_sets(conj_train, conj_test, descriptor):
             X_test, y_test   = surf.extract(path, conj_test[i]);
 
         elif descriptor == 'combined':
-            X_train_ORB, y_train_ORB    = orb.extract(path, conj_train[i]);
-            X_test_ORB, y_test_ORB      = orb.extract(path, conj_train[i]);
-            
+           
             X_train_SIFT, y_train_SIFT  = sift.extract(path, conj_train[i]);
-            X_test_SIFT, y_test_SIFT    = sift.extract(path, conj_train[i]);
+            X_test_SIFT, y_test_SIFT    = sift.extract(path, conj_test[i]);
             
             X_train_HOG, y_train_HOG    = hog.extract(path, conj_train[i]);
-            X_test_HOG, y_test_HOG      = hog.extract(path, conj_train[i]);
+            X_test_HOG, y_test_HOG      = hog.extract(path, conj_test[i], train=False);
           
-            X_train = X_train_ORB + X_train_SIFT + X_train_HOG
-            y_train = y_train_ORB + y_train_SIFT + y_train_HOG
-            X_test  = X_test_ORB + X_test_SIFT + X_test_HOG
-            y_test  = y_test_ORB + y_test_SIFT + y_test_HOG
+            X_train_ORB, y_train_ORB    = orb.extract(path, conj_train[i]);
+            X_test_ORB, y_test_ORB      = orb.extract(path, conj_test[i], train=False);
+            
+            X_train = np.concatenate( [ X_train_ORB, X_train_HOG, X_train_SIFT ], axis=1 );
+            y_train = y_train_ORB;
+            X_test  = np.concatenate( [ X_test_ORB, X_test_HOG, X_test_SIFT ], axis=1 );
+            y_test  = y_test_ORB;
+
+        
 
 
         init(X_train, y_train, X_test, y_test, i+1)
@@ -63,7 +66,7 @@ def split_sets(conj_train, conj_test, descriptor):
     
 
 def classify(descriptor):
-    conj_train, conj_test = cross_validation.split(2)
+    conj_train, conj_test = cross_validation.split(8)
     split_sets(conj_train, conj_test, descriptor)
         
 

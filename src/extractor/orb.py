@@ -5,16 +5,21 @@ from sklearn.utils import shuffle
 from tqdm import tqdm
 
 
-def extract(path, data):
+def extract(path, data, train=True):
 
         vector_size = 32
         x_val = []
         y_val = []
 
+        if train:
+            print("ORB descripting train")
+        else:
+            print("ORB descripting test")
+
         orb = cv2.ORB_create()
 
         for f in tqdm(data):
-        
+            
             try:
                 # Carrega a imagem pra memória
                 img = cv2.imread(os.path.join(path, f), cv2.COLOR_RGB2GRAY)
@@ -50,8 +55,10 @@ def extract(path, data):
                        y_val.append(1)
                     else:
                         y_val.append(-1)
-
+                else:
+                    print(f)                    
             except cv2.error as e:
+                print(f)
                 print('Error: ', e)
                     
-        return x_val, y_val
+        return np.array(x_val), np.array(y_val)
