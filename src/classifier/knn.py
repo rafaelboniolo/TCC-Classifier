@@ -66,7 +66,7 @@ def split_sets(conj_train, conj_test, descriptor):
     
 
 def classify(descriptor):
-    conj_train, conj_test = cross_validation.split(8)
+    conj_train, conj_test = cross_validation.split(10)
     split_sets(conj_train, conj_test, descriptor)
         
 
@@ -77,16 +77,16 @@ def init(X_train, y_train, X_test, y_test, index = 0):
     
     
 
-    # pca = PCA(n_components=2, whiten=True)
-    # pca = pca.fit(X_train)
-    # print("Treinando PCA...")
+    pca = PCA(n_components=3, whiten=True)
+    pca = pca.fit(X_train)
+    print("Treinando PCA...")
 
-    # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
-    # X_train = pca.transform(X_train)
-    # X_test = pca.transform(X_test)
-    # print("Transformando PCA...")
+    print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+    X_train = pca.transform(X_train)
+    X_test = pca.transform(X_test)
+    print("Transformando PCA...")
 
-    classifier = KNeighborsClassifier(n_neighbors=2, weights="uniform", metric="euclidean")
+    classifier = KNeighborsClassifier(n_neighbors=19, weights="distance", metric="euclidean")
 
     print("Treinando classificador...")
     classifier.fit(X_train, y_train)

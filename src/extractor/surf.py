@@ -22,7 +22,14 @@ def extract(path, data, train=True):
                 # Carrega a imagem pra memória
                 img = cv2.imread(os.path.join(path, f), cv2.COLOR_RGB2GRAY)
 
-                kps, dsc = surf.detectAndCompute(img, None)
+                # kps, dsc = surf.detectAndCompute(img, None)
+                
+                kps = surf.detect(img)
+
+                kps = sorted(kps, key=lambda x: -x.response)[:vector_size]
+
+                kps, dsc = surf.compute(img, kps)
+                
 
                 if dsc is not None:
                     dsc = dsc.flatten()
