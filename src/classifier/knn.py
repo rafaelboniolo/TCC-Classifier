@@ -75,16 +75,23 @@ def classify(descriptor):
     
 def init(X_train, y_train, X_test, y_test, index = 0):
     
+    
+
     # pca = PCA(n_components=2, whiten=True)
     # pca = pca.fit(X_train)
+    # print("Treinando PCA...")
 
     # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
     # X_train = pca.transform(X_train)
     # X_test = pca.transform(X_test)
+    # print("Transformando PCA...")
 
     classifier = KNeighborsClassifier(n_neighbors=2, weights="uniform", metric="euclidean")
 
+    print("Treinando classificador...")
     classifier.fit(X_train, y_train)
+    
+    print("Classificando...")
     y_predicted = classifier.predict(X_test)
 
     from mlxtend.evaluate import confusion_matrix

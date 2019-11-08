@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np 
 
-surf = cv2.xfeatures2d.SURF_create()
+surf = cv2.xfeatures2d.SURF_create(400)
 
 img = cv2.imread("C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset\\1_007_0043.png", cv2.COLOR_RGB2GRAY)
 
