@@ -42,7 +42,10 @@ def extract(path, data, train=True):
                     x_val.append(dsc)
                     
                     # get class
-                    y_val.append(int(f[:1]))
+                    if int(f[:1]) == 0:
+                        y_val.append(-1)
+                    else:
+                        y_val.append(1)
              
 
             except cv2.error as e:

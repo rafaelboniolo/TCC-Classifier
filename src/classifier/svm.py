@@ -65,7 +65,7 @@ def split_sets(conj_train, conj_test, descriptor):
     
 
 def classify(descriptor):
-    conj_train, conj_test = cross_validation.split(8)
+    conj_train, conj_test = cross_validation.split(10)
     split_sets(conj_train, conj_test, descriptor)
         
 
@@ -74,17 +74,17 @@ def classify(descriptor):
     
 def init(X_train, y_train, X_test, y_test, index = 0):
     
-    pca = PCA(n_components=3, whiten=True)
-    pca = pca.fit(X_train)
+    # pca = PCA(n_components=3, whiten=True)
+    # pca = pca.fit(X_train)
 
-    print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
-    X_train = pca.transform(X_train)
-    X_test = pca.transform(X_test)
+    # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+    # X_train = pca.transform(X_train)
+    # X_test = pca.transform(X_test)
 
     from mlxtend.evaluate import confusion_matrix
     from mlxtend.plotting import plot_confusion_matrix
 
-    oc_svm_clf = svm.OneClassSVM(nu=0.1, gamma=0.1)  # Obtained using grid search
+    oc_svm_clf = svm.OneClassSVM(nu=0.1, gamma=0.001)  # Obtained using grid search
     oc_svm_clf.fit(X_train, y_train)
     oc_svm_preds = oc_svm_clf.predict(X_test)
     
