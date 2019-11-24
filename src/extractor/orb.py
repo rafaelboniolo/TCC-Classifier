@@ -23,6 +23,7 @@ def extract(path, data, train=True):
             try:
                 # Carrega a imagem pra memória
                 img = cv2.imread(os.path.join(path, f), cv2.COLOR_RGB2GRAY)
+                img = cv2.resize(img, (256, 256))
 
                 # detecta os keypoints da imagem
                 kps = orb.detect(img)
