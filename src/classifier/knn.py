@@ -81,16 +81,16 @@ def init(X_train, y_train, X_test, y_test, index = 0):
     
     
 
-    pca = PCA(n_components=7, whiten=True)
-    pca = pca.fit(X_train)
-    print("Treinando PCA...")
+    # pca = PCA(n_components=3, whiten=True)
+    # pca = pca.fit(X_train)
+    # print("Treinando PCA...")
 
-    print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
-    X_train = pca.transform(X_train)
-    X_test = pca.transform(X_test)
-    print("Transformando PCA...")
+    # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+    # X_train = pca.transform(X_train)
+    # X_test = pca.transform(X_test)
+    # print("Transformando PCA...")
 
-    classifier = KNeighborsClassifier(n_neighbors=19, weights="uniform", metric="manhattan")
+    classifier = KNeighborsClassifier(n_neighbors=19, weights="distance", metric="euclidean", n_jobs=-1)
 
     print("Treinando classificador...")
     classifier.fit(X_train, y_train)
