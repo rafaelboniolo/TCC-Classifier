@@ -16,13 +16,15 @@ path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
 
 data = np.array([f for f in os.listdir(path) if(f.endswith('.png'))])
 
-X_train, y_train  = sift.extract(path, data);
-# X_train_hog, y_train_hog    = hog.extract(path, data);
-# X_train_sift, y_train_sift  = sift.extract(path, data);
-# X_train_orb, y_train_orb    = orb.extract(path, data);
+X_train_surf, y_train_surf  = surf.extract(path, data);
+X_train_hog, y_train_hog    = hog.extract(path, data);
+X_train_sift, y_train_sift  = sift.extract(path, data);
+X_train_orb, y_train_orb    = orb.extract(path, data);
+X_train, y_train  = surf.extract(path, data);
 
-# X_train = np.concatenate( [ X_train_orb, X_train_hog, X_train_sift, X_train_surf ], axis=1 );
-# y_train = y_train_hog
+X_train = np.concatenate( [ X_train_orb, X_train_hog, X_train_sift, X_train_surf ], axis=1 );
+y_train = y_train_hog
+
 
 # grid_params = {
 #     'n_neighbors': [11, 5, 7, 3, 19, 13, 15],
@@ -36,7 +38,7 @@ X_train, y_train  = sift.extract(path, data);
 # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
 # X_train = pca.transform(X_train)
 
-# gs = GridSearchCV(KNeighborsClassifier(), grid_params, verbose=1, cv=10, n_jobs=-1)
+# gs = GridSearchCV(KNeighborsClassifier(), grid_params, verbose=1, cv=10, n_jobs=7)
 
 # gs_results = gs.fit(X_train, y_train)
 
@@ -44,17 +46,19 @@ X_train, y_train  = sift.extract(path, data);
 # print(gs_results.best_estimator_)
 # print(gs_results.best_params_)
 
+# {'gamma': 0.0001, 'kernel': 'linear', 'nu': 0.9}
+# 0.4942240979407434
 
 tuned_parameters = {'gamma' : [0.0001, 0.01, 0.1],
         'nu' : [0.1, 0.5, 0.9],
-        'kernel':['rbf', 'linear']}
+        'kernel':['rbf', 'linear', 'sigmoid', 'poly']}
         # 'rbf', 'linear', 'sigmoid', 'poly'
 
 scores=['precision']
 
 for score in scores:
     gs = GridSearchCV(OneClassSVM(), tuned_parameters, cv=10,
-                    scoring='%s_macro' % score, n_jobs=-1)
+                    scoring='%s_macro' % score, n_jobs=7)
 
     gs_results = gs.fit(X_train, y_train)
 

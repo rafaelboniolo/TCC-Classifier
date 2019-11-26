@@ -45,7 +45,7 @@ def split_sets(conj_train, conj_test, descriptor):
         elif descriptor == 'combined':
            
             X_train_SIFT, y_train_SIFT  = sift.extract(path, conj_train[i]);
-            X_test_SIFT, y_test_SIFT    = sift.extract(path, conj_test[i]);
+            X_test_SIFT, y_test_SIFT    = sift.extract(path, conj_test[i], train=False);
             
             X_train_HOG, y_train_HOG    = hog.extract(path, conj_train[i]);
             X_test_HOG, y_test_HOG      = hog.extract(path, conj_test[i], train=False);
@@ -81,16 +81,16 @@ def init(X_train, y_train, X_test, y_test, index = 0):
     
     
 
-    # pca = PCA(n_components=3, whiten=True)
-    # pca = pca.fit(X_train)
-    # print("Treinando PCA...")
+    pca = PCA(n_components=2, whiten=True)
+    pca = pca.fit(X_train)
+    print("Treinando PCA...")
 
-    # print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
-    # X_train = pca.transform(X_train)
-    # X_test = pca.transform(X_test)
-    # print("Transformando PCA...")
+    print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
+    X_train = pca.transform(X_train)
+    X_test = pca.transform(X_test)
+    print("Transformando PCA...")
 
-    classifier = KNeighborsClassifier(n_neighbors=19, weights="distance", metric="euclidean", n_jobs=-1)
+    classifier = KNeighborsClassifier(n_neighbors=19, weights="uniform", metric="euclidean", n_jobs=-1)
 
     print("Treinando classificador...")
     classifier.fit(X_train, y_train)
