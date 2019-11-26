@@ -5,7 +5,8 @@ from tqdm import tqdm
 
 
 def extract(path, data, train=True):
-        vector_size = 20000
+        
+        vector_size = 32  
         x_val = []
         y_val = []
 
@@ -34,11 +35,12 @@ def extract(path, data, train=True):
 
                 if dsc is not None:
                     dsc = dsc.flatten()
-
-                    if dsc.size < vector_size:
-                        dsc = np.concatenate([dsc, np.zeros(vector_size - dsc.size)])
-                    else:
-                        dsc = dsc[:vector_size]
+                    
+                    needed_size = (vector_size * 64)
+                    if dsc.size < needed_size:
+                    #     # if we have less the 32 descriptors then just adding zeros at the
+                    #     # end of our feature vector
+                        dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
                     
                     x_val.append(dsc)
                     
