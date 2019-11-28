@@ -51,7 +51,7 @@ y_train = y_train_hog
 
 tuned_parameters = {'gamma' : [0.0001, 0.01, 0.1],
         'nu' : [0.1, 0.5, 0.9],
-        'kernel':['rbf', 'linear', 'sigmoid', 'poly']}
+        'kernel':['rbf', 'linear', 'sigmoid']}
         # 'rbf', 'linear', 'sigmoid', 'poly'
 
 scores=['precision']
