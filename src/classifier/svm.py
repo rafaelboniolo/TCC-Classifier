@@ -17,6 +17,9 @@ from extractor import orb
 from extractor import sift
 from extractor import surf
 from tools import cross_validation
+from mlxtend.evaluate import confusion_matrix
+from mlxtend.plotting import plot_confusion_matrix
+
 
 path = 'C:\\Users\\rafae\\Documents\\GitHub\\TCC-Dataset\\dataset'
    
@@ -70,28 +73,25 @@ def split_sets(conj_train, conj_test, descriptor):
 
 def classify(descriptor):
     conj_train, conj_test = cross_validation.split(10)
-    split_sets(conj_train, conj_test, descriptor)
-        
-
-    
+    split_sets(conj_train, conj_test, descriptor)    
 
     
 def init(X_train, y_train, X_test, y_test, index = 0):
-    
+
     pca = PCA(n_components=2, whiten=True)
+    oc_svm_clf = svm.OneClassSVM(nu=0.9, gamma=0.01, kernel='sigmoid')  # Obtained using grid search
+    
     pca = pca.fit(X_train)
 
     print('Explained variance percentage = %0.2f' % sum(pca.explained_variance_ratio_))
     X_train = pca.transform(X_train)
     X_test = pca.transform(X_test)
 
-    from mlxtend.evaluate import confusion_matrix
-    from mlxtend.plotting import plot_confusion_matrix
-
-    oc_svm_clf = svm.OneClassSVM(nu=0.9, gamma=0.01, kernel='sigmoid')  # Obtained using grid search
+   
     oc_svm_clf.fit(X_train, y_train)
     oc_svm_preds = oc_svm_clf.predict(X_test)
     
+
 
     cm = confusion_matrix(y_target=y_test, y_predicted=oc_svm_preds, binary=True)
     fig, ax = plot_confusion_matrix(conf_mat=cm)
@@ -105,17 +105,17 @@ def init(X_train, y_train, X_test, y_test, index = 0):
     ## Classification Report
     ###############################################
 
-    from sklearn.metrics import classification_report
+    # from sklearn.metrics import classification_report
 
 
-    c_report = classification_report(y_test, oc_svm_preds)
+    # c_report = classification_report(y_test, oc_svm_preds)
 
-    ### print values
-    print("classification_report")
-    print(c_report)
+    # ### print values
+    # print("classification_report")
+    # print(c_report)
 
-    # import pandas as pd 
+    # # import pandas as pd 
 
-    # c_report = classification_report(y_test, y_predicted, output_dict=True)
-    # df_report = pd.DataFrame(c_report)
-    # df_report.to_csv('.\\output\\report.csv', index= True)
+    # # c_report = classification_report(y_test, y_predicted, output_dict=True)
+    # # df_report = pd.DataFrame(c_report)
+    # # df_report.to_csv('.\\output\\report.csv', index= True)

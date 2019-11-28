@@ -69,7 +69,7 @@ def split_sets(conj_train, conj_test, descriptor):
         
     
 
-def classify(descriptor):
+def classify(descriptor, save=False):
     conj_train, conj_test = cross_validation.split(10)
     split_sets(conj_train, conj_test, descriptor)
         
