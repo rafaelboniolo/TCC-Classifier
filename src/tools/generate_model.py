@@ -29,7 +29,7 @@ def split_sets(conj_train, conj_test, classifier):
     
 
 def save():
-    classifier = KNeighborsClassifier(n_neighbors=19, weights="uniform", metric="euclidean", n_jobs=-1)
+    classifier = KNeighborsClassifier(n_neighbors=3, weights="distance", metric="manhattan", n_jobs=-1)
     conj_train, conj_test = cross_validation.split(10)
     split_sets(conj_train, conj_test, classifier)    
 
@@ -37,7 +37,7 @@ def save():
 def init(X_train, y_train, X_test, y_test, index = 0, classifier=None):
     classifier.fit(X_train, y_train)
 
-    if index == 1:
+    if index == 9:
         dump(classifier, 'model.joblib')
 
    
