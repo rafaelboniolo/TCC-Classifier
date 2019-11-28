@@ -20,6 +20,3 @@ ax1.imshow(img, cmap=plt.cm.gray)
 
 plt.show()
 
-# cv2.imshow("Image", img, cmap=plt.cm.gray)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
