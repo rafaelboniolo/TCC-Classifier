@@ -1,6 +1,6 @@
-# Anomaly Recognize Server
+# Classifier
 
-### Servidor de backend utilizado no Trabalho de Conclusão de Conclusão de Curso
+### Conjunto de script de classificação utilizados no Trabalho de Conclusão de Conclusão de Curso
 
 ### Módulo de Reconhecimento de Imagens Anômalas Baseado em Microsserviços - TCC2
 
